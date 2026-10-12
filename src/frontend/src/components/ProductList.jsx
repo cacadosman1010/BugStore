@@ -6,14 +6,12 @@ const ProductList = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        // Check URL for search param (V-002: Reflected XSS)
         const params = new URLSearchParams(window.location.search);
         const s = params.get('search');
         if (s) {
             setSearchTerm(s);
         }
 
-        // Build API URL
         const apiUrl = s ? `/api/products?search=${encodeURIComponent(s)}` : '/api/products';
 
         fetch(apiUrl)
@@ -39,7 +37,6 @@ const ProductList = () => {
                         className="font-bold underline decoration-coral ml-2"
                         dangerouslySetInnerHTML={{ __html: searchTerm }}
                     ></span>
-                    {/* V-002: Reflected XSS vulnerability planted here */}
                 </h2>
             )}
 

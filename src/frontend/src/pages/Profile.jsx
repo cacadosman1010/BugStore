@@ -80,13 +80,11 @@ const Profile = () => {
     return (
         <div className="container mx-auto p-4 py-12 max-w-4xl">
             <div className="bg-hive-medium/60 backdrop-blur-xl rounded-3xl shadow-card border border-hive-border/40 overflow-hidden">
-                {/* Profile Header Background */}
                 <div className="h-48 bg-gradient-to-br from-hive-deep via-hive-medium to-coral/20 relative">
                     <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
                 </div>
 
                 <div className="px-8 md:px-12 pb-12 relative">
-                    {/* Avatar positioning */}
                     <div className="flex flex-col md:flex-row items-end gap-6 -mt-16 mb-8">
                         <div className="relative group">
                             <div className="w-32 h-32 rounded-3xl bg-hive-deep border-4 border-hive-border/40 shadow-card overflow-hidden">
@@ -131,7 +129,6 @@ const Profile = () => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-8 border-t border-hive-border/40">
-                        {/* Sidebar Stats */}
                         <div className="space-y-6">
                             <div className="flex items-center gap-3 text-hive-muted font-bold text-sm">
                                 <Mail className="w-4 h-4" /> {profile.email}
@@ -149,7 +146,6 @@ const Profile = () => {
                             </div>
                         </div>
 
-                        {/* Main Content */}
                         <div className="md:col-span-2">
                             {isEditing ? (
                                 <form onSubmit={handleUpdate} className="space-y-6 animate-in fade-in duration-300">

@@ -2,17 +2,15 @@ from datetime import datetime, timedelta
 from jose import jwt, JWTError
 import hashlib
 
-# V-011: Weak secret hardcoded
 SECRET_KEY = "bugstore_secret_2024"
 ALGORITHM = "HS256"
 
 def create_access_token(data: dict):
     """
     Generate JWT.
-    V-011: Weak configuration and potential for 'alg: none' (simulated by allowing varied algs if needed).
     """
     to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(days=1) # 24h as per F-007
+    expire = datetime.utcnow() + timedelta(days=1)
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
@@ -20,20 +18,14 @@ def create_access_token(data: dict):
 def decode_access_token(token: str):
     """
     Decode JWT.
-    V-011: Insecure decoding - accepts weak algorithms.
     """
     try:
-        # Deliberately allowing 'none' algorithm if user specifies it? 
-        # Actually HS256 is the default but we can mock it.
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM, "none"])
         return payload
     except JWTError:
         return None
 
 def get_password_hash(password: str):
-    """
-    V-006: Insecure MD5 hashing.
-    """
     return hashlib.md5(password.encode()).hexdigest()
 
 def verify_password(plain_password: str, hashed_password: str):
@@ -52,9 +44,6 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 oauth2_scheme_optional = OAuth2PasswordBearer(tokenUrl="auth/login", auto_error=False)
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    """
-    V-011: Weak JWT validation.
-    """
     payload = decode_access_token(token)
     if not payload:
         raise HTTPException(

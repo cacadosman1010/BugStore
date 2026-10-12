@@ -4,7 +4,6 @@ from src.models import CartItem, Product, Coupon
 class CartManager:
     """
     Handles shopping cart logic using session_id for persistence.
-    Deliberately maintains simplicity to allow for vulnerabilities V-023 and V-024 later.
     """
     def __init__(self, db: Session, session_id: str):
         self.db = db
@@ -73,7 +72,6 @@ class CartManager:
     def get_totals(self):
         """
         Calculate totals. 
-        Note: Frontend will try to override this in F-004 (V-023).
         """
         items = self.get_items()
         subtotal = sum(item.product.price * item.quantity for item in items if item.product)
@@ -91,12 +89,10 @@ class CartManager:
     def apply_coupon(self, code: str):
         """
         Apply a discount code.
-        Deliberately vulnerable to V-024 (unlimited reuse/stacking logic flaws).
         """
         coupon = self.db.query(Coupon).filter(
             Coupon.code == code, 
             Coupon.active == True
         ).first()
         
-        # We don't check if it was already applied in this session (V-024)
         return coupon

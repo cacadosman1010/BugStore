@@ -57,7 +57,6 @@ const ScoringDashboard = () => {
 
     return (
         <div className="container mx-auto px-4 py-12 max-w-7xl">
-            {/* Header */}
             <div className="mb-16 space-y-4">
                 <div className="flex items-center gap-3 text-coral font-black uppercase tracking-[0.3em] text-sm">
                     <Bug className="w-5 h-5" /> Vulnerability Intelligence
@@ -69,7 +68,6 @@ const ScoringDashboard = () => {
                 </p>
             </div>
 
-            {/* Summary Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
                 <div className="glass-card rounded-3xl p-8 border-l-4 border-coral group hover:-translate-y-1 transition-all">
                     <div className="w-12 h-12 bg-coral/10 text-coral rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
@@ -104,7 +102,6 @@ const ScoringDashboard = () => {
                 </div>
             </div>
 
-            {/* Tier Breakdown - Glowing Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
                 <div className="relative glass-card rounded-3xl p-8 overflow-hidden group hover:-translate-y-1 transition-all">
                     <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent pointer-events-none" />
@@ -170,7 +167,6 @@ const ScoringDashboard = () => {
                 </div>
             </div>
 
-            {/* Vulnerability Checklist */}
             <div className="glass-card rounded-3xl p-8 md:p-12">
                 <div className="flex items-center gap-4 mb-10">
                     <div className="w-12 h-12 bg-coral/10 text-coral rounded-2xl flex items-center justify-center">
@@ -249,7 +245,6 @@ const ScoringDashboard = () => {
                 ))}
             </div>
 
-            {/* Note */}
             <div className="mt-10 glass-card rounded-3xl p-6 border-l-4 border-yellow-400">
                 <div className="flex items-start gap-3">
                     <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />

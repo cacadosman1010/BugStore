@@ -39,7 +39,6 @@ const Checkout = () => {
                 body: JSON.stringify({
                     shipping_address: address,
                     payment_simulated: payment,
-                    // V-023: Trusted Client Total - we send exactly what the frontend calculates
                     total: cart.totals.total
                 })
             });
@@ -59,7 +58,6 @@ const Checkout = () => {
 
     return (
         <div className="container mx-auto p-4 py-12 max-w-4xl">
-            {/* Progress Stepper */}
             <div className="flex justify-between items-center mb-12 px-4 md:px-20">
                 {[
                     { icon: MapPin, label: 'Shipment' },

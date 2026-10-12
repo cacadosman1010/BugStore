@@ -86,7 +86,6 @@ const SecurePortalSetup = () => {
             <div className="w-full max-w-lg bg-hive-medium/60 backdrop-blur-xl rounded-3xl p-10 shadow-card border border-hive-border/40 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-hive-deep via-hive-medium to-coral/20"></div>
 
-                {/* Progress indicator */}
                 <div className="flex items-center justify-center gap-4 mb-10">
                     {[1, 2, 3].map((s) => (
                         <div key={s} className="flex items-center gap-2">
@@ -102,7 +101,6 @@ const SecurePortalSetup = () => {
                     ))}
                 </div>
 
-                {/* Step 1: Introduction */}
                 {step === 1 && (
                     <div className="text-center space-y-8">
                         <div className="w-20 h-20 bg-coral rounded-3xl flex items-center justify-center mx-auto rotate-12">
@@ -137,7 +135,6 @@ const SecurePortalSetup = () => {
                     </div>
                 )}
 
-                {/* Step 2: Scan QR & Verify */}
                 {step === 2 && setupData && (
                     <div className="space-y-8">
                         <div className="text-center">
@@ -203,7 +200,6 @@ const SecurePortalSetup = () => {
                     </div>
                 )}
 
-                {/* Step 3: Success */}
                 {step === 3 && (
                     <div className="text-center space-y-8">
                         <div className="w-24 h-24 bg-coral rounded-full flex items-center justify-center mx-auto animate-pulse">

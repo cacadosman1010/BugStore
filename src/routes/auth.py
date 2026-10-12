@@ -22,9 +22,7 @@ class UserLogin(BaseModel):
 def register(data: UserRegister, db: Session = Depends(get_db)):
     """
     User registration.
-    V-019: No validation on username (special characters allowed).
     """
-    # Check if user exists
     existing_user = db.query(User).filter(
         (User.username == data.username) | (User.email == data.email)
     ).first()
@@ -32,11 +30,10 @@ def register(data: UserRegister, db: Session = Depends(get_db)):
     if existing_user:
         raise HTTPException(status_code=400, detail="Username or Email already in colony.")
 
-    # Create new user
     new_user = User(
-        username=data.username, # No validation (V-019)
+        username=data.username,
         email=data.email,
-        password_hash=get_password_hash(data.password), # MD5 (V-006)
+        password_hash=get_password_hash(data.password),
         name=data.name,
         role="user"
     )
@@ -45,7 +42,6 @@ def register(data: UserRegister, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_user)
 
-    # Auto-login
     token = create_access_token({"sub": new_user.username, "userId": new_user.id, "role": new_user.role})
     
     return {
@@ -63,7 +59,6 @@ def register(data: UserRegister, db: Session = Depends(get_db)):
 def login(data: UserLogin, db: Session = Depends(get_db)):
     """
     User login.
-    V-007: Plaintext response of JWT.
     """
     user = db.query(User).filter(User.username == data.username).first()
     

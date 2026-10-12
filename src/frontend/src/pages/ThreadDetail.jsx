@@ -13,8 +13,6 @@ const ThreadDetail = () => {
 
     const fetchThread = async () => {
         try {
-            // V-001: The {id} here is passed directly to the backend RAW SQL query.
-            // An attacker can browse /forum/thread/1 OR 1-- etc.
             const res = await fetch(`/api/forum/threads/${id}`);
             const data = await res.json();
             if (res.ok) {
@@ -73,7 +71,6 @@ const ThreadDetail = () => {
                     <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Forum
                 </Link>
 
-                {/* Main Thread */}
                 <article className="bg-hive-medium/60 backdrop-blur-xl border border-hive-border/40 rounded-3xl shadow-card overflow-hidden mb-12">
                     <div className="p-10 md:p-16">
                         <div className="flex items-center gap-4 mb-8">
@@ -95,7 +92,6 @@ const ThreadDetail = () => {
                     </div>
                 </article>
 
-                {/* Replies */}
                 <div className="space-y-6 mb-12">
                     <h3 className="text-xs font-black uppercase tracking-[0.3em] text-hive-muted flex items-center gap-3">
                         <BadgeCheck className="w-4 h-4" /> Swarm Responses ({thread.replies?.length || 0})
@@ -117,7 +113,6 @@ const ThreadDetail = () => {
                     ))}
                 </div>
 
-                {/* Reply Box */}
                 {user ? (
                     <div className="bg-hive-medium/60 backdrop-blur-xl border border-hive-border/40 p-10 rounded-3xl shadow-card relative overflow-hidden group">
                         <div className="absolute top-0 left-0 w-2 h-full bg-coral"></div>

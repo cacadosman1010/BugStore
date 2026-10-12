@@ -59,7 +59,6 @@ const AdminDashboard = () => {
                 </div>
             </div>
 
-            {/* Counter Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
                 {[
                     { label: 'Colony Members', val: stats.counters.users, icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
@@ -78,7 +77,6 @@ const AdminDashboard = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                {/* Recent Orders */}
                 <div className="lg:col-span-2 space-y-6">
                     <div className="flex items-center justify-between mb-2">
                         <h3 className="text-xl font-black text-hive-text uppercase tracking-tight flex items-center gap-3">
@@ -123,7 +121,6 @@ const AdminDashboard = () => {
                     </div>
                 </div>
 
-                {/* Quick Links / Maintenance */}
                 <div className="space-y-8">
                     <h3 className="text-xl font-black text-hive-text uppercase tracking-tight flex items-center gap-3 mb-2 underline skew-x-[-12deg]">
                         Maintenance Sector
@@ -156,7 +153,7 @@ const AdminDashboard = () => {
                                 <span className="font-black uppercase tracking-widest text-xs">Security Advisory</span>
                             </div>
                             <p className="text-xs text-red-300 font-medium leading-relaxed opacity-70">
-                                Warning: Debug endpoints currently exposed in sector 7-A (V-012). Maintain low observability metrics during maintenance.
+                                Warning: Debug endpoints currently exposed in sector 7-A. Maintain low observability metrics during maintenance.
                             </p>
                             <a href="/api/admin/vulnerable-debug-stats" target="_blank" className="mt-6 inline-block text-[9px] font-black uppercase tracking-[0.2em] text-red-400 underline">
                                 Leak Investigation Access

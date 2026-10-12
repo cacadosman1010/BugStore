@@ -71,7 +71,6 @@ const ProductDetail = () => {
                 </Link>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-24">
-                    {/* Image Section */}
                     <div className="space-y-8">
                         <div className="rounded-3xl overflow-hidden shadow-card glass-card aspect-square relative group">
                             <img
@@ -95,7 +94,6 @@ const ProductDetail = () => {
                         </div>
                     </div>
 
-                    {/* Info Section */}
                     <div className="space-y-10">
                         <div>
                             <div className="flex items-center gap-4 mb-4">

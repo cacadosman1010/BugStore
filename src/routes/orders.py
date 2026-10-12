@@ -10,7 +10,6 @@ router = APIRouter(prefix="/orders", tags=["orders"])
 def get_orders(user_id: Optional[int] = None, db: Session = Depends(get_db)):
     """
     Get all orders.
-    V-009: IDOR vulnerability - no access control.
     """
     if user_id:
         orders = db.query(Order).filter(Order.user_id == user_id).all()
@@ -32,14 +31,12 @@ def get_orders(user_id: Optional[int] = None, db: Session = Depends(get_db)):
 def get_order_detail(order_id: int, db: Session = Depends(get_db)):
     """
     Get order details by ID.
-    V-009: Direct Object Reference without authorization.
     An attacker can guess order IDs.
     """
     order = db.query(Order).filter(Order.id == order_id).first()
     if not order:
         raise HTTPException(status_code=404, detail="Order not found in the swarm")
     
-    # Manually loading items to ensure they are returned
     items = db.query(OrderItem).filter(OrderItem.order_id == order_id).all()
     
     return {

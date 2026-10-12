@@ -19,7 +19,7 @@ from datetime import datetime
 class Finding:
     """Standardized vulnerability finding"""
     scanner: str
-    vuln_id: str = None  # Mapped to V-001, V-002, etc.
+    vuln_id: str = None
     name: str = ""
     severity: str = ""
     url: str = ""
@@ -75,14 +75,13 @@ class ZAPImporter:
         
         findings = []
         
-        # ZAP JSON structure: site -> alerts
         for site in data.get('site', []):
             for alert in site.get('alerts', []):
                 for instance in alert.get('instances', []):
                     finding = Finding(
                         scanner='OWASP ZAP',
                         name=alert.get('name', ''),
-                        severity=alert.get('riskdesc', '').split()[0],  # "High (Medium)" -> "High"
+                        severity=alert.get('riskdesc', '').split()[0],
                         url=instance.get('uri', ''),
                         parameter=instance.get('param', ''),
                         description=alert.get('desc', ''),
@@ -152,7 +151,7 @@ class BugTraceAIImporter:
         for vuln in data.get('vulnerabilities', []):
             finding = Finding(
                 scanner='BugTraceAI',
-                vuln_id=vuln.get('id'),  # Already mapped to V-XXX
+                vuln_id=vuln.get('id'),
                 name=vuln.get('name', ''),
                 severity=vuln.get('severity', ''),
                 url=vuln.get('url', ''),
@@ -216,25 +215,20 @@ class VulnerabilityMapper:
     def map_finding(finding: Finding) -> str:
         """Attempt to map a finding to a BugStore vulnerability ID"""
         
-        # If already mapped (e.g., BugTraceAI), return it
         if finding.vuln_id:
             return finding.vuln_id
         
-        # Try to match based on rules
         for vuln_id, rules in VulnerabilityMapper.MAPPING_RULES.items():
-            # Check keywords
             keyword_match = any(
                 kw.lower() in finding.name.lower() or kw.lower() in finding.description.lower()
                 for kw in rules['keywords']
             )
             
-            # Check endpoints
             endpoint_match = any(
                 ep in finding.url
                 for ep in rules['endpoints']
             )
             
-            # Check parameters
             param_match = not rules['parameters'] or any(
                 param.lower() in finding.parameter.lower()
                 for param in rules['parameters']
@@ -267,7 +261,7 @@ class ResultAggregator:
     
     def get_detection_rate(self) -> float:
         """Calculate detection rate (28 total vulnerabilities)"""
-        total_vulns = 28  # V-015 and V-016 not implemented
+        total_vulns = 28
         detected = len(self.mapped_vulns)
         return (detected / total_vulns) * 100
     
@@ -313,7 +307,6 @@ class ResultAggregator:
         return scanners
 
 
-# CLI Usage Example
 if __name__ == '__main__':
     import sys
     
@@ -325,7 +318,6 @@ if __name__ == '__main__':
     scanner_type = sys.argv[1]
     file_path = sys.argv[2]
     
-    # Parse based on scanner type
     if scanner_type == 'burp':
         findings = BurpImporter.parse(file_path)
     elif scanner_type == 'zap-json':
@@ -340,14 +332,11 @@ if __name__ == '__main__':
         print(f"Unknown scanner: {scanner_type}")
         sys.exit(1)
     
-    # Aggregate and analyze
     aggregator = ResultAggregator()
     aggregator.add_findings(findings)
     
-    # Generate report
     report = aggregator.generate_report()
     
-    # Print results
     print(json.dumps(report, indent=2))
     
     print(f"\n=== Summary ===")

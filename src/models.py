@@ -7,23 +7,20 @@ Base = declarative_base()
 class User(Base):
     """
     User model for the colony members.
-    V-006: Storing passwords using MD5 (insecure hashing).
-    V-019: No validation on username allows for special characters.
     """
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(100), unique=True, index=True, nullable=False)
     email = Column(String(255), unique=True, index=True, nullable=False)
-    password_hash = Column(String(255), nullable=False) # MD5
+    password_hash = Column(String(255), nullable=False)
     name = Column(String(255))
     bio = Column(Text)
     avatar_url = Column(String(500))
-    role = Column(String(50), default="user") # user, staff, admin
+    role = Column(String(50), default="user")
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    # TOTP/2FA fields for secure-portal
     totp_secret = Column(String(100), nullable=True)
     totp_enabled = Column(Boolean, default=False)
 
@@ -42,12 +39,12 @@ class Product(Base):
     latin_name = Column(String(255))
     description = Column(Text)
     personality = Column(String(100))
-    care_level = Column(String(50)) # Beginner, Intermediate, Expert
+    care_level = Column(String(50))
     price = Column(Float, nullable=False)
     diet = Column(String(255))
     habitat = Column(String(255))
     lifespan = Column(String(100))
-    category = Column(String(100)) # Beetles, Butterflies, Arachnids, Flying, Crawling, Exotic
+    category = Column(String(100))
     stock = Column(Integer, default=0)
     rating_avg = Column(Float, default=0)
     reviews_count = Column(Integer, default=0)
@@ -91,26 +88,24 @@ class Coupon(Base):
     id = Column(Integer, primary_key=True, index=True)
     code = Column(String(100), unique=True, index=True, nullable=False)
     discount_percent = Column(Integer, nullable=False)
-    max_uses = Column(Integer, default=-1) # -1 for unlimited
+    max_uses = Column(Integer, default=-1)
     current_uses = Column(Integer, default=0)
     active = Column(Boolean, default=True)
 
 class Order(Base):
     """
     Customer orders.
-    V-009: Insecure direct object reference (IDOR) will be possible.
-    V-023: Trusting client totals.
     """
     __tablename__ = "orders"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=True) # Allow guest orders
-    status = Column(String(50), default="Pending") # Pending, Processing, Shipped, Delivered
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    status = Column(String(50), default="Pending")
     total = Column(Float, nullable=False)
     shipping_cost = Column(Float, default=0)
     tax = Column(Float, default=0)
     discount = Column(Float, default=0)
-    shipping_address = Column(Text) # JSON string
+    shipping_address = Column(Text)
     tracking_number = Column(String(255))
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -136,13 +131,12 @@ class OrderItem(Base):
 class Blog(Base):
     """
     Blog posts for the community hub.
-    V-016: Stored XSS vulnerability will be planted in content.
     """
     __tablename__ = "blogs"
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(255), nullable=False)
-    content = Column(Text, nullable=False) # Stored XSS (V-016)
+    content = Column(Text, nullable=False)
     author_id = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -152,8 +146,6 @@ class Blog(Base):
 class Review(Base):
     """
     Product reviews by colony members.
-    V-020: Review moderation bypass potential.
-    V-003: Potential XSS in comments.
     """
     __tablename__ = "reviews"
 
@@ -171,7 +163,6 @@ class Review(Base):
 class Thread(Base):
     """
     Forum threads for colony discussions.
-    V-001: SQL injection target (simulated in routes).
     """
     __tablename__ = "threads"
 
@@ -202,12 +193,11 @@ class Reply(Base):
 class EmailTemplate(Base):
     """
     Email templates for notifications.
-    V-027: SSTI vulnerability in template rendering.
     """
     __tablename__ = "email_templates"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), unique=True, index=True, nullable=False)
     subject = Column(String(255), nullable=False)
-    body = Column(Text, nullable=False) # SSTI payload here
+    body = Column(Text, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

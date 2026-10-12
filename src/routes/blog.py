@@ -37,12 +37,11 @@ def create_blog(
 ):
     """
     Create a blog post.
-    V-016: Stored XSS vulnerability. 
     We do NOT sanitize the 'content' field before saving.
     """
     new_blog = Blog(
         title=data.title,
-        content=data.content, # V-016
+        content=data.content,
         author_id=current_user.id
     )
     db.add(new_blog)

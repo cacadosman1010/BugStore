@@ -44,8 +44,6 @@ const Reviews = ({ productId }) => {
                     product_id: parseInt(productId),
                     rating: rating,
                     comment: comment,
-                    // V-020: Planted vulnerability - we allow the client to set is_approved
-                    // An attacker can set this to true to bypass moderation.
                     is_approved: false
                 })
             });
@@ -55,7 +53,6 @@ const Reviews = ({ productId }) => {
                 setComment('');
                 setRating(5);
                 setMessage({ type: 'success', text: 'Deployment review submitted! It will appear after swarm moderation.' });
-                // We don't fetchReviews immediately because it's not approved yet (unless exploited)
             } else {
                 setMessage({ type: 'error', text: data.detail || 'The swarm rejected your feedback.' });
             }
@@ -76,7 +73,6 @@ const Reviews = ({ productId }) => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                {/* Review Form */}
                 <div className="lg:col-span-1">
                     <div className="bg-hive-deep/80 p-8 rounded-3xl border border-hive-border/40 sticky top-8">
                         <h3 className="text-xl font-black text-hive-text mb-6 uppercase tracking-tight">Post Observations</h3>
@@ -136,7 +132,6 @@ const Reviews = ({ productId }) => {
                     </div>
                 </div>
 
-                {/* Review List */}
                 <div className="lg:col-span-2 space-y-8">
                     {reviews.length === 0 ? (
                         <div className="glass-card p-12 rounded-3xl text-center border border-hive-border/40 border-dashed">
@@ -166,7 +161,6 @@ const Reviews = ({ productId }) => {
 
                                 <div
                                     className="text-hive-muted font-medium leading-relaxed italic"
-                                    /* V-003: Submitting review comments that could contain XSS */
                                     dangerouslySetInnerHTML={{ __html: review.comment }}
                                 />
                             </div>

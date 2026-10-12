@@ -6,7 +6,7 @@ const AdminProducts = () => {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [editingProduct, setEditingProduct] = useState(null); // null = list mode, 'new' = create mode, object = edit mode
+    const [editingProduct, setEditingProduct] = useState(null);
     const [formData, setFormData] = useState({});
     const [message, setMessage] = useState(null);
 
@@ -23,7 +23,7 @@ const AdminProducts = () => {
     const fetchProducts = async () => {
         setLoading(true);
         try {
-            const res = await fetch('/api/products?limit=100'); // get all products roughly
+            const res = await fetch('/api/products?limit=100');
             const data = await res.json();
             setProducts(data.items || []);
         } catch (err) {
@@ -56,9 +56,6 @@ const AdminProducts = () => {
         const isNew = editingProduct === 'new';
         const url = isNew ? '/api/admin/products' : `/api/admin/products/${editingProduct.id}`;
         const method = isNew ? 'POST' : 'PUT';
-
-        // V-019: No client-side validation on these fields either.
-        // An attacker (or malicious admin) can inject scripts into description/name.
 
         try {
             const res = await fetch(url, {
@@ -121,7 +118,6 @@ const AdminProducts = () => {
 
     return (
         <div className="container mx-auto p-4 py-12 max-w-6xl">
-            {/* Header */}
             <div className="flex items-center justify-between mb-12">
                 <div className="space-y-2">
                     <Link to="/admin" className="group inline-flex items-center gap-2 text-hive-muted font-black uppercase tracking-widest text-xs mb-4 hover:text-coral transition-all">
@@ -140,7 +136,6 @@ const AdminProducts = () => {
                 </div>
             )}
 
-            {/* Editor Modal/Overlay */}
             {editingProduct && (
                 <div className="fixed inset-0 bg-hive-dark/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
                     <div className="glass-card p-8 md:p-12 rounded-3xl w-full max-w-3xl relative my-8">
@@ -180,7 +175,6 @@ const AdminProducts = () => {
                                 <textarea rows="4" value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-hive-deep/80 border border-hive-border/40 p-4 rounded-xl font-medium text-hive-text focus:outline-none focus:ring-2 focus:ring-coral/30 resize-none"></textarea>
                             </div>
 
-                            {/* Dropdowns */}
                             <div className="grid grid-cols-2 gap-4 md:col-span-2">
                                 {['category', 'care_level', 'diet', 'personality'].map(field => (
                                     <div key={field}>
@@ -203,7 +197,6 @@ const AdminProducts = () => {
                 </div>
             )}
 
-            {/* List */}
             <div className="glass-card rounded-3xl overflow-hidden">
                 {products.length === 0 ? (
                     <div className="p-20 text-center text-hive-subtle font-bold italic">No specimens in the colony yet.</div>

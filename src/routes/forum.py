@@ -20,10 +20,8 @@ class ReplyCreate(BaseModel):
 def get_threads(q: Optional[str] = None, db: Session = Depends(get_db)):
     """
     List forum threads.
-    V-001: SQL Injection vulnerability in search query.
     """
     if q:
-        # V-001: RAW SQL with string formatting (DANGEROUS)
         query = f"SELECT * FROM threads WHERE title LIKE '%{q}%' OR content LIKE '%{q}%'"
         result = db.execute(sqlalchemy_text(query))
         return [dict(row._mapping) for row in result]
@@ -34,9 +32,7 @@ def get_threads(q: Optional[str] = None, db: Session = Depends(get_db)):
 def get_thread_detail(thread_id: str, db: Session = Depends(get_db)):
     """
     Get thread details and replies.
-    V-001: SQL Injection vulnerability in thread_id parameter.
     """
-    # V-001: RAW SQL with string formatting (DANGEROUS)
     query = f"SELECT * FROM threads WHERE id = {thread_id}"
     try:
         thread_result = db.execute(sqlalchemy_text(query)).first()
@@ -45,7 +41,6 @@ def get_thread_detail(thread_id: str, db: Session = Depends(get_db)):
         
         thread_data = dict(thread_result._mapping)
         
-        # Get replies normally or via SQLi prone query
         replies = db.query(Reply).filter(Reply.thread_id == thread_data['id']).all()
         
         return {

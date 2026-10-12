@@ -39,7 +39,6 @@ const Navbar = () => {
         <nav className="bg-hive-deep/80 backdrop-blur-xl border-b border-hive-border/30 sticky top-0 z-50">
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-center h-20">
-                    {/* Logo */}
                     <Link to="/" className="flex items-center gap-3 group">
                         <div className="w-10 h-10 bg-coral rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform shadow-glow">
                             <Bug className="text-white w-6 h-6" />
@@ -47,7 +46,6 @@ const Navbar = () => {
                         <span className="text-2xl font-black text-hive-text uppercase tracking-tighter">Bug<span className="text-coral">Store</span></span>
                     </Link>
 
-                    {/* Desktop Links */}
                     <div className="hidden md:flex items-center gap-8">
                         <Link to="/blog" className="text-xs font-bold uppercase tracking-widest text-hive-muted hover:text-coral transition-colors flex items-center gap-2">
                             <Rss className="w-4 h-4" /> Chronicles
@@ -96,14 +94,12 @@ const Navbar = () => {
                         )}
                     </div>
 
-                    {/* Mobile Menu Button */}
                     <button className="md:hidden p-2 text-hive-muted" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                         {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                     </button>
                 </div>
             </div>
 
-            {/* Mobile Menu */}
             {isMenuOpen && (
                 <div className="md:hidden bg-hive-deep border-t border-hive-border/30 p-6 flex flex-col gap-6">
                     <Link to="/blog" className="font-bold uppercase tracking-widest text-hive-text hover:text-coral transition-colors" onClick={() => setIsMenuOpen(false)}>Chronicles</Link>

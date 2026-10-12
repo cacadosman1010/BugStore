@@ -17,7 +17,6 @@ class CouponApply(BaseModel):
 def get_session_id(request: Request, response: Response):
     """
     Retrieves or creates a session_id.
-    V-008: Cookie is not HttpOnly, not Secure, no SameSite.
     """
     session_id = request.cookies.get("session_id")
     if not session_id:

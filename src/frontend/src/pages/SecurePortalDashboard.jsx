@@ -68,7 +68,6 @@ const SecurePortalDashboard = () => {
 
     return (
         <div className="container mx-auto p-4 py-12 max-w-7xl">
-            {/* Security Banner */}
             <div className="bg-coral/10 border border-coral/20 rounded-2xl py-3 px-6 mb-12 flex items-center justify-center gap-2 text-coral text-sm font-bold">
                 <Lock className="w-4 h-4" />
                 <span>SECURE SESSION - 2FA VERIFIED</span>
@@ -76,7 +75,6 @@ const SecurePortalDashboard = () => {
                 <span>User: {user?.username}</span>
             </div>
 
-            {/* Header */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
                 <div className="space-y-4">
                     <div className="flex items-center gap-3 text-coral font-black uppercase tracking-[0.3em] text-sm">
@@ -103,7 +101,6 @@ const SecurePortalDashboard = () => {
                 </div>
             </div>
 
-            {/* Stats Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
                 {[
                     { label: 'Colony Members', val: stats.counters.users, icon: Users, color: 'text-coral' },
@@ -121,7 +118,6 @@ const SecurePortalDashboard = () => {
                 ))}
             </div>
 
-            {/* Recent Orders */}
             {stats.recent_orders && stats.recent_orders.length > 0 && (
                 <div className="bg-hive-medium/40 backdrop-blur border border-hive-border/20 rounded-3xl p-8 mb-16">
                     <h2 className="text-xl font-black text-hive-text uppercase tracking-tight mb-6">Recent Orders</h2>
@@ -160,7 +156,6 @@ const SecurePortalDashboard = () => {
                 </div>
             )}
 
-            {/* Quick Actions */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <Link
                     to="/admin/users"
@@ -189,7 +184,6 @@ const SecurePortalDashboard = () => {
                 </Link>
             </div>
 
-            {/* Security Notice */}
             <div className="mt-16 bg-coral/5 border border-coral/20 rounded-3xl p-8">
                 <div className="flex items-center gap-3 text-coral mb-4">
                     <ShieldCheck className="w-6 h-6" />

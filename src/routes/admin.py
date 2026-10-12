@@ -22,7 +22,6 @@ def get_admin_stats(
     total_revenue = db.query(func.sum(Order.total)).scalar() or 0
     total_products = db.query(Product).count()
     
-    # Recent activity
     recent_orders = db.query(Order).order_by(Order.created_at.desc()).limit(5).all()
     
     return {
@@ -55,7 +54,6 @@ def list_all_users(
 @router.get("/vulnerable-debug-stats")
 def get_vulnerable_stats(db: Session = Depends(get_db)):
     """
-    V-012: Broken Access Control.
     A debug endpoint that returns sensitive stats without auth.
     Useful for attackers to gauge target size.
     """
@@ -65,9 +63,8 @@ def get_vulnerable_stats(db: Session = Depends(get_db)):
         "admin_emails": [u.email for u in db.query(User).filter(User.role == "admin").all()]
     }
 
-# Product Management (CRUD)
 class ProductBase(BaseModel):
-    name: str # V-019: No validation on length or characters (XSS/clash potential)
+    name: str
     species: str
     latin_name: str
     price: float
@@ -131,7 +128,6 @@ def delete_product(
     db.commit()
     return {"message": "Specimen successfully retired from the colony."}
 
-# Email Template Management (V-027 SSTI)
 class TemplateUpdate(BaseModel):
     subject: str
     body: str
@@ -164,9 +160,7 @@ def preview_email_template(
 ):
     """
     Live preview of email template.
-    V-027: User input 'data.body' is rendered with Jinja2.
     """
-    # Mock context for preview
     preview_context = {
         "user": {"name": "Larva Tester", "email": "test@bugstore.com"},
         "order": {"id": 123, "total": 99.99, "tracking_number": "BUG-123-456"},
@@ -174,7 +168,6 @@ def preview_email_template(
     }
     
     try:
-        # Import here to avoid circular dependencies if any
         import jinja2
         t = jinja2.Template(data.body)
         rendered = t.render(**preview_context)

@@ -71,7 +71,6 @@ const Cart = () => {
             const data = await res.json();
             if (res.ok) {
                 alert(`${data.message} ${data.discount_percent}% off!`);
-                // In a real app we'd update state or re-fetch with discount logic
                 fetchCart();
             } else {
                 setCouponError(data.detail || "Invalid code");
@@ -101,7 +100,6 @@ const Cart = () => {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                    {/* Cart Items */}
                     <div className="lg:col-span-2 space-y-6">
                         {cart.items.map(item => (
                             <div key={item.id} className="glass-card glass-card-hover p-6 rounded-3xl flex items-center gap-6 group transition-shadow">
@@ -146,7 +144,6 @@ const Cart = () => {
                         </div>
                     </div>
 
-                    {/* Order Summary */}
                     <div className="space-y-8">
                         <div className="bg-coral text-white p-8 rounded-[2rem] shadow-card relative overflow-hidden">
                             <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">

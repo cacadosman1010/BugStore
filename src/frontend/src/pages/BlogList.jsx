@@ -67,7 +67,6 @@ const BlogList = () => {
                                 </h2>
 
                                 <p className="text-hive-subtle line-clamp-3 mb-8 grow font-medium leading-relaxed">
-                                    {/* We don't render HTML here for list view to simplify, detail view will have XSS */}
                                     {blog.content.replace(/<[^>]*>?/gm, '').substring(0, 150)}...
                                 </p>
 

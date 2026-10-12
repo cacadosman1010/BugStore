@@ -64,7 +64,6 @@ const Register = () => {
     return (
         <div className="min-h-screen flex items-center justify-center p-4 bg-hive-deep/80">
             <div className="w-full max-w-md bg-hive-medium/60 backdrop-blur-xl rounded-3xl p-10 shadow-card border border-hive-border/40 relative overflow-hidden">
-                {/* Abstract design elements */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-coral/10 rounded-full -mr-16 -mt-16"></div>
                 <div className="absolute bottom-0 left-0 w-24 h-24 bg-coral/10 rounded-full -ml-12 -mb-12"></div>
 

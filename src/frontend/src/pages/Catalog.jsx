@@ -38,7 +38,6 @@ const Catalog = () => {
                 body: JSON.stringify({ product_id: productId, quantity: 1 })
             });
             if (res.ok) {
-                // Could show a toast here
                 alert("Specimen secured in your containment unit!");
             }
         } catch (err) {
@@ -55,7 +54,6 @@ const Catalog = () => {
 
     return (
         <div className="container mx-auto p-4 py-12 max-w-7xl">
-            {/* Hero / Header Section */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20 px-4">
                 <div className="space-y-4">
                     <div className="flex items-center gap-3 text-hive-muted font-black uppercase tracking-[0.3em] text-sm">
@@ -97,11 +95,9 @@ const Catalog = () => {
                             dangerouslySetInnerHTML={{ __html: searchTerm }}
                         ></span>"
                     </h2>
-                    {/* V-002: Reflected XSS vulnerability planted here */}
                 </div>
             )}
 
-            {/* Product Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
                 {products.map(product => (
                     <Link to={`/product/${product.id}`} key={product.id} className="group glass-card glass-card-hover rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2 flex flex-col">
@@ -112,7 +108,6 @@ const Catalog = () => {
                                 className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
                             />
 
-                            {/* Overlay Badges */}
                             <div className="absolute top-6 left-6 flex flex-col gap-2">
                                 <div className="bg-hive-dark/90 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest text-hive-text shadow-card">
                                     {product.category}
