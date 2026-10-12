@@ -1,4 +1,4 @@
-bugstore.bugtraceai.com {
+:80 {
 	log {
 		output stdout
 		format json

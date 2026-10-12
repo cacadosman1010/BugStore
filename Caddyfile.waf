@@ -3,7 +3,7 @@
 	order rate_limit before coraza_waf
 }
 
-bugstore.bugtraceai.com {
+:80 {
 	log {
 		output stdout
 		format json

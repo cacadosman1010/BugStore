@@ -35,20 +35,21 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: "mysql+pymysql://bugstore:bugstore@db:3306/bugstore"
-      BUGSTORE_WAF_ENABLED: "false"
-      BUGSTORE_SCORING_ENABLED: "true"
+      BUGSTORE_DIFFICULTY: 1
+      #BUGSTORE_WAF_ENABLED: "false"
+      #BUGSTORE_SCORING_ENABLED: "true"
       BUGSTORE_AUTO_SEED: "true"
       BUGSTORE_WORKERS: "2"
       BUGSTORE_TIMEOUT: "30"
       BUGSTORE_REQUEST_TIMEOUT: "10"
       XDG_CONFIG_HOME: "/tmp/caddy-config"
     ports:
-      - "80:80"
-      - "443:443"
+      - "13370:80"
+      #- "443:443"
     volumes:
       - caddy_data:/data/caddy
-      - ./Caddyfile:/app/Caddyfile
-      - ./Caddyfile.waf:/app/Caddyfile.waf
+      - ./Caddyfile:/app/Caddyfile:Z
+      - ./Caddyfile.waf:/app/Caddyfile.waf:Z
 
 volumes:
   mariadb_data:
